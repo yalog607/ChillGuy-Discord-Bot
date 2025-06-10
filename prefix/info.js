@@ -18,7 +18,7 @@ module.exports = {
     let userTag = '';
     if (args.length == 1) userTag = args[0];
     else userTag = `<@${message.author.id}>`;
-
+    const {role_admin_name }= require("../config.json");
     if (!message.member.permissions.has(PermissionsBitField.Flags.Administrator) && args.length == 1){
         return await message.reply({
             content: `Bạn không có quyển kiểm tra người khác`,
@@ -37,44 +37,8 @@ module.exports = {
       "/" +
       joinTimeUnformat.getFullYear();
     if (!user) {
-      const newUser = new User({
-        username: userTag,
-        userId: userId,
-        joinAt: joinAt,
-        amountUsed: 0,
-      });
-      await newUser.save();
-      const embedSuccess = new EmbedBuilder()
-      .setColor(guildMember.displayHexColor)
-      .setAuthor({
-        name: "Thông Tin Khách Hàng",
-        iconURL: "attachment://anh_server.jpg",
-      })
-      .addFields(
-        { name: ``, value: `> **Khách hàng**: ${userTag}\n> **Ngày gia nhập**: ${joinAt}`},
-        { name: "", value: "\n" },
-        {
-          name: "💳 Tổng số tiền đã chi",
-          value: `\`0 VNĐ\``,
-          inline: true,
-        },
-        { name: "🏆 Xếp hạng", value: `<@&${guildMember.roles.highest.id}>`, inline: true },
-        { name: "", value: "\n" },
-        { name: "🖨️ Sản phẩm", value: `` }
-      )
-      .setThumbnail(guildMember.displayAvatarURL())
-      .setFooter({
-        text: `${message.author.username} | ${new Date(message.createdTimestamp).toLocaleString()}`,
-        iconURL: message.author.displayAvatarURL(),
-      });
       return await message.reply({
-        embeds: [embedSuccess],
-        files: [
-          {
-            attachment: "img/anh_server.jpg",
-            name: "anh_server.jpg",
-          },
-        ],
+          content: `Bạn chưa có dữ liệu sản phẩm.`,
       });
     }
 
