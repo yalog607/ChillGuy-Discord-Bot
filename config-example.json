@@ -1,0 +1,8 @@
+{
+    "token": "TOKEN_BOT_CUA_BAN",
+    "clientId": "CLIENT_ID_CUA_BOT",
+	"guildId": "ID_GUILD",
+    "prefix": "TUY_CHINH_THEO_Y_BAN",
+    "role_admin_name": "ROLE_CO_QUYEN_ADMINSTRATOR",
+    "MONGO_URL": "URL_MONGODB"
+}
