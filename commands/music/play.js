@@ -9,7 +9,7 @@ module.exports = {
         .addStringOption(option => 
             option
                 .setName("query")
-                .setDescription("URL Spotify của bài hát")
+                .setDescription("Tên hoặc URL của bài hát")
                 .setRequired(true)
         ),
     async execute(interaction) {
@@ -32,6 +32,7 @@ module.exports = {
             }
             const searchResult = await player.search(query, {
                 requestedBy: interaction.user,
+                // fallbackSearchEngine: searchEngineOption
                 fallbackSearchEngine: searchEngineOption
             });
             if (!searchResult || searchResult.tracks.length === 0) {
@@ -46,9 +47,7 @@ module.exports = {
                     leaveOnStop: true, //If player should leave the voice channel after user stops the player
                     leaveOnStopCooldown: 5000, //Cooldown in ms
                     leaveOnEnd: false, //If player should leave after the whole queue is over
-                    leaveOnEndCooldown: 15000, //Cooldown in ms
                     leaveOnEmpty: false, //If the player should leave when the voice channel is empty
-                    leaveOnEmptyCooldown: 300000, //Cooldown in ms
                 },
                 initialSpeakers: [interaction.member.id]
             });

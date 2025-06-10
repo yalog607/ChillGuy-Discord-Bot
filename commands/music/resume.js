@@ -24,6 +24,6 @@ module.exports = {
     if (wasPaused) timeline.resume();
 
     // If the timeline was previously paused, the queue is now back to playing
-    return interaction.reply(`The player is now playing'}.`);
+    return interaction.reply(`The player is now playing.`);
   },
 };

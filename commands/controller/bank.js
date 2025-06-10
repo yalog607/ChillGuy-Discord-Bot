@@ -4,7 +4,7 @@ const bankInfoJson = require("../../bank.config.json");
 let bankArr = [];
 for (let ele in bankInfoJson){
     bankArr.push({
-        name: bankInfoJson[ele].BANK_NAME,
+        name: `${bankInfoJson[ele].BANK_NAME} - ${bankInfoJson[ele].NAME} - ${bankInfoJson[ele].STK}`,
         value: ele
     })
 }
