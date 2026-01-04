@@ -5,6 +5,13 @@ const { token } = require("./config.json");
 const { Player, useMainPlayer } = require('discord-player');
 const { DefaultExtractors } = require('@discord-player/extractor');
 const { YtDlpExtractor } = require('discord-player-ytdlp');
+const express = require('express');
+const app = express();
+const port = 8080;
+app.use(express.json());
+app.use(express.urlencoded());
+app.use(express.json());
+const { youtube_token } = require('./config.json');
 
 const client = new Client({
   intents: [
@@ -29,15 +36,9 @@ player.extractors.register(YtDlpExtractor, {
     preferYtdlpMetadata: true, // Use yt-dlp for YouTube metadata (default: true)
     streamQuality: 'bestaudio[ext=m4a]/bestaudio[ext=webm]/bestaudio',
     youtubeiOptions: {
-        // cookies: process.env.YOUTUBE_COOKIES,
+        cookies: `${youtube_token}`,
         client: 'WEB' // Optional: YouTube client
     }
-});
-
-player.on('debug', async (message) => {
-  // Emitted when the player sends debug info
-  // Useful for seeing what dependencies, extractors, etc are loaded
-  console.log(`General player debug event: ${message}`);
 });
 
 client.commands = new Collection();
@@ -107,5 +108,21 @@ client.config = require("./config.json");
 module.exports = client;
 
 // require("./MusicEvents/index");
+client.dataBank = new Object();
+app.post('/api/banking-discord', async(req, res) => {
+  const sample = "Apikey ";
+  const API_TOKEN = req.get("Authorization");
+  const TOKEN = API_TOKEN.slice(sample.length, API_TOKEN.length);
+  if (!TOKEN === client.config.TOKEN_API)return;
+  const data = req.body;
+  if(!data) return;
+  const command = client.commands.get('sendbill');
+  client.dataBank = data;
+  await command.execute(client);
+  return res.status(200).json({success: true});
+})
 
+app.listen(port, () => {
+  console.log(`App is listening on port ${port}`)
+})
 client.login(token);

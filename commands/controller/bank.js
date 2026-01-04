@@ -21,7 +21,7 @@ let data = new SlashCommandBuilder()
         option.setName("amount")
             .setDescription("Số tiền muốn hiện trên QR")
             .setRequired(true)
-            .setMinValue(100)
+            .setMinValue(2000)
     );
 bankArr.forEach(bank =>{
     data.options[0].addChoices(bank);
@@ -43,12 +43,13 @@ module.exports = {
         const lowerNameBank = bankInfo.BANK_NAME.toLowerCase();
         const arx = bankInfo.NAME.split(/ +/);
         const nameOfAccountBank = arx.join('%20');
-
+        const content = `${interaction.channelId}a${interaction.user.id}`;
+        const imgUrl = `https://qr.sepay.vn/img?acc=VQRQACVDA7668&bank=MBBank&amount=2000&des=${content}`;
         const bankEmbed = new EmbedBuilder()
             .setColor('#f0d3ef')
             .setAuthor({name: "Thông Tin Chuyển Khoản", iconURL: 'attachment://money.png'})
             .setDescription('\n')
-            .setImage(`https://img.vietqr.io/image/${lowerNameBank}-${bankInfo.STK}-compact2.jpg?amount=${amount}&addInfo=KiwiKiwi&accountName=${nameOfAccountBank}`)
+            .setImage(imgUrl)
             .addFields(
                 { name: 'Chủ Tài Khoản', value: `\`\`\`${bankInfo.NAME}\`\`\`\u200B` },
                 { name: 'Số Tài Khoản', value: `\`\`\`${bankInfo.STK}\`\`\`\u200B` },

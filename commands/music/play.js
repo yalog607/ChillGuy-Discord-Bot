@@ -32,7 +32,6 @@ module.exports = {
             }
             const searchResult = await player.search(query, {
                 requestedBy: interaction.user,
-                // fallbackSearchEngine: searchEngineOption
                 fallbackSearchEngine: searchEngineOption
             });
             if (!searchResult || searchResult.tracks.length === 0) {
